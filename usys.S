@@ -36,4 +36,3 @@ SYSCALL(get_max_pid)
 SYSCALL(get_proc_info)
 SYSCALL(set_prio)
 SYSCALL(get_prio)
-

@@ -51,6 +51,7 @@ struct proc {
   char name[16];               // Process name (debugging)
   int ctxt; 				   // number of context switch
   int priority;                // Process priority
+  int cost;					   // cpu used time (for priority)
 };
 
 // Process memory is laid out contiguously, low addresses first:

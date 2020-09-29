@@ -613,7 +613,7 @@ SYSCALL(set_prio)
 
 00000382 <get_prio>:
 SYSCALL(get_prio)
- 382:	b8 1b 00 00 00       	mov    $0x1b,%eax
+ 382:	b8 1c 00 00 00       	mov    $0x1c,%eax
  387:	cd 40                	int    $0x40
  389:	c3                   	ret    
  38a:	66 90                	xchg   %ax,%ax

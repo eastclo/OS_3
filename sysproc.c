@@ -97,7 +97,8 @@ sys_hello(void)
 	return 0;
 }
 
-int sys_hello_name(void)
+int
+sys_hello_name(void)
 {
 	char *name;
 
@@ -106,17 +107,20 @@ int sys_hello_name(void)
 	return 0;
 }
 
-int sys_get_num_proc(void)
+int 
+sys_get_num_proc(void)
 {
 	return get_num_proc();
 }
 
-int sys_get_max_pid(void)
+int 
+sys_get_max_pid(void)
 {
 	return get_max_pid();
 }
 
-int sys_get_proc_info(void)
+int 
+sys_get_proc_info(void)
 {
 	int pid, processInfo;
 
@@ -125,14 +129,16 @@ int sys_get_proc_info(void)
 	return get_proc_info(pid, (struct processInfo*)processInfo);
 }
 
-int sys_set_prio(void)
+int 
+sys_set_prio(void)
 {
 	int prio;
 	argint(0, &prio);
 	return set_prio(prio);
 }
 
-int sys_get_prio(void)
+int 
+sys_get_prio(void)
 {
 	return get_prio();
 }

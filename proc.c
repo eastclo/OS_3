@@ -324,8 +324,11 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct proc *p1;
+  struct proc *hp;
   struct cpu *c = mycpu();
   c->proc = 0;
+  int check = 0;
   
   for(;;){
     // Enable interrupts on this processor.
@@ -333,14 +336,41 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+		
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
 
+	  hp = p;
+	  if(p->priority < p->cost)
+		  check = 1;
+
+//	  cprintf("start %d\n", p->pid);
+	  for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++){
+        if(p1->state != RUNNABLE)
+          continue;
+
+//	  	cprintf("%d\n", p1->pid);
+		if(check == 1)
+			p1->cost = 0;
+
+		 if(p1->priority == 0)
+			 hp = p1;
+		 else if(hp->priority - hp->cost < p1->priority - p1->cost) {
+		  hp = p1;
+		}
+	  }
+	  if(check == 1)
+		  check = 0;
+	  p = hp; 
+      p->cost = p->cost + 1;
+//	  cprintf("%d %d\n", p->pid, p->ctxt);
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
 
+	  if(c->proc != 0)
+	  	c->proc->ctxt++;
       c->proc = p;
 	  c->proc->ctxt++;
       switchuvm(p);
@@ -354,7 +384,6 @@ scheduler(void)
       c->proc = 0;
     }
     release(&ptable.lock);
-
   }
 }
 
@@ -584,12 +613,14 @@ int get_proc_info(int pid, struct processInfo* pInfo)
 
 int set_prio(int prio)
 {
-	struct cpu *c; 
+	struct proc *cp; 
+
+	if(prio < 0) //음수일경우 에러
+		return -1;
 
 	acquire(&ptable.lock);
-
-	c = mycpu();	
-	c->proc->priority = prio;
+	cp = myproc();	
+	cp->priority = prio;
 	
 	release(&ptable.lock);
 	return 0;
@@ -597,14 +628,13 @@ int set_prio(int prio)
 
 int get_prio(void)
 {
-	struct cpu *c;
+	struct proc *p;
 	int prio;
 
 	acquire(&ptable.lock);
 
-	c = mycpu();	
-	prio = c->proc->priority;
-
+	p = myproc();	
+	prio = p->priority;
 	release(&ptable.lock);
 
 	return prio;

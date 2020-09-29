@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 
     int pids[N];
     int rets[N];
-    set_prio(1000);
+    if(set_prio(1000) < 0)
+		printf(1, "set priority error for parent process\n");
     printf(1, "Priority of parent process = %d\n", get_prio());
 
     for (int i = 0; i < N; i++)
@@ -40,8 +41,9 @@ int main(int argc, char *argv[])
         int ret = fork();
         if (ret == 0)
         {
-            set_prio(priority);
-            delay(20);
+    		if(set_prio(priority) < 0)
+				printf(1, "set priority error for child erocess\n");
+			delay(20);
             exit();
         }
         else if (ret > 0)

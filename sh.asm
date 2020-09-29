@@ -1995,7 +1995,7 @@ SYSCALL(set_prio)
 
 00000de2 <get_prio>:
 SYSCALL(get_prio)
-     de2:	b8 1b 00 00 00       	mov    $0x1b,%eax
+     de2:	b8 1c 00 00 00       	mov    $0x1c,%eax
      de7:	cd 40                	int    $0x40
      de9:	c3                   	ret    
      dea:	66 90                	xchg   %ax,%ax

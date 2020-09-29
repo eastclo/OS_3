@@ -753,7 +753,7 @@ SYSCALL(set_prio)
 
 000004a2 <get_prio>:
 SYSCALL(get_prio)
- 4a2:	b8 1b 00 00 00       	mov    $0x1b,%eax
+ 4a2:	b8 1c 00 00 00       	mov    $0x1c,%eax
  4a7:	cd 40                	int    $0x40
  4a9:	c3                   	ret    
  4aa:	66 90                	xchg   %ax,%ax
