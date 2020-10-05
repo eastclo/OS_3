@@ -342,26 +342,35 @@ scheduler(void)
         continue;
 
 	  hp = p;
-	  if(p->priority < p->cost)
-		  check = 1;
+	  int total_runable = 0;
+	  int cur_end = 0;
 
 //	  cprintf("start %d\n", p->pid);
 	  for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++){
         if(p1->state != RUNNABLE)
           continue;
-
+		total_runable++;
 //	  	cprintf("%d\n", p1->pid);
 		if(check == 1)
 			p1->cost = 0;
 
-		 if(p1->priority == 0)
-			 hp = p1;
-		 else if(hp->priority - hp->cost < p1->priority - p1->cost) {
-		  hp = p1;
+		if(p1->priority == 0) {
+			hp = p1;
+			hp->cost = -1;
+			break;
 		}
+
+		if(p1->priority - p1->cost < 0) 
+			cur_end++;
+		else if(hp->priority - hp->cost < p1->priority - p1->cost) 
+			hp = p1;
 	  }
+
 	  if(check == 1)
 		  check = 0;
+
+	  if(cur_end == total_runable)
+		  check = 1;
 	  p = hp; 
       p->cost = p->cost + 1;
 //	  cprintf("%d %d\n", p->pid, p->ctxt);
@@ -369,8 +378,6 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
 
-	  if(c->proc != 0)
-	  	c->proc->ctxt++;
       c->proc = p;
 	  c->proc->ctxt++;
       switchuvm(p);

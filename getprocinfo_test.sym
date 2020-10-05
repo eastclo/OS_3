@@ -1,7 +1,7 @@
 00000000 .text
 000007a8 .rodata
-000007f8 .eh_frame
-00000a94 .bss
+00000814 .eh_frame
+00000ab0 .bss
 00000000 .comment
 00000000 .debug_aranges
 00000000 .debug_info
@@ -14,10 +14,10 @@
 00000000 ulib.c
 00000000 printf.c
 000003b0 printint
-000007e4 digits.1054
+00000800 digits.1054
 00000000 umalloc.c
-00000a94 freep
-00000a98 base
+00000ab0 freep
+00000ab4 base
 00000080 strcpy
 00000382 get_num_proc
 0000039a set_prio
@@ -42,7 +42,7 @@
 000002ca fork
 0000035a sbrk
 0000036a uptime
-00000a94 __bss_start
+00000ab0 __bss_start
 00000130 memset
 00000000 main
 000003a2 get_prio
@@ -50,8 +50,8 @@
 0000034a dup
 00000392 get_proc_info
 00000210 stat
-00000a94 _edata
-00000aa0 _end
+00000ab0 _edata
+00000abc _end
 00000332 link
 0000037a hello_name
 000002d2 exit
